@@ -27,6 +27,7 @@ function App() {
       >
         <ambientLight intensity={0.3} />
         <pointLight position={[-10,0,-20]} intensity={0.5} />
+        <pointLight position={[0,-10,0]} intensity={0.5} />
         <SpinningMesh 
         position={[0,1,0]}
         args={[3,2,1]}

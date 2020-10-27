@@ -1,8 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import './App.scss';
 import { Canvas, useFrame } from 'react-three-fiber';
 import { BoxBufferGeometry } from 'three';
 import {softShadows, MeshWobbleMaterial, OrbitControls} from 'drei'
+import {useSpring, a} from 'react-spring/three'
 
 softShadows();
 
@@ -11,8 +12,15 @@ const SpinningMesh =({position, args, color, speed})=>{
   useFrame(()=>{
     mesh.current.rotation.x= mesh.current.rotation.y += 0.01
   })
+  const [expand, setExpand]= useState(false)
+  const props= useSpring({
+    scale: expand? [1.4,1.4,1.4]:[1,1,1]
+  })
   return(
-    <mesh castShadow
+    <a.mesh 
+    onClick={() => setExpand(!expand)}
+    scale={props.scale}
+    castShadow
     position={position}
     ref={mesh}>
     <boxBufferGeometry 
@@ -22,10 +30,10 @@ const SpinningMesh =({position, args, color, speed})=>{
     <MeshWobbleMaterial 
     attach='material' 
     color={color} 
-    speed={speed}
+    speed={speed} 
     factor={0.6}
     />
-  </mesh>
+  </a.mesh>
   )
 }
 function App() {
